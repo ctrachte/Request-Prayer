@@ -435,9 +435,9 @@ button.primary,
 
 /* table */
 table {
+  margin:1rem auto;
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
   border: 1px solid #ddd;
 }
 

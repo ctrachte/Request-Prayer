@@ -52,7 +52,7 @@ export default function Requests() {
           <td>{RequestTitle}</td>
           <td>{RequestDescription}</td>
           <td>{Answer}</td>
-          <td><input type='date' value={AnsweredOn}/></td>
+          <td><input type='date' onChange={(e)=> {console.log(e.target.value)}} value={AnsweredOn}/></td>
           <td>{fk_GroupID ? fk_GroupID : "none"}</td>
         </tr>
       );
