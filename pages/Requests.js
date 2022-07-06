@@ -44,11 +44,8 @@ export default function Requests() {
       return (
         <th
           scope="col"
-          className="text-sm border-bottom font-medium text-white bg-pink-600 px-6 py-4"
           key={index}
-        >
-          {key.toUpperCase()}
-        </th>
+        >{key.toUpperCase()}</th>
       );
     });
   }
@@ -66,6 +63,11 @@ export default function Requests() {
       } = req; //destructuring
       return (
         <tr className="border-b" key={id}>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
+            <Link href={{ pathname: "/UpdateRequest", query: { keyword: id } }}>
+                Update Request
+            </Link>
+          </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
             {id}
           </td>
@@ -100,7 +102,6 @@ export default function Requests() {
       );
     });
   }
-
   return (
     <div>
       <div id="requests" className="m-4 border flex flex-col">
@@ -110,8 +111,7 @@ export default function Requests() {
               <table className="min-w-full">
                 <thead className="">
                   <tr className="border-b">
-                    {requests.length ? setTableHeader() : ""}
-                  </tr>
+                    <th></th>{requests.length ? setTableHeader() : ""}</tr>
                 </thead>
                 <tbody>{requests.length ? setTableData() : ""}</tbody>
               </table>
