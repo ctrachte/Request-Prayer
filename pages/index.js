@@ -21,12 +21,12 @@ export default function Home() {
       <ul>
       <li>
         <Link href="/">
-          <a>Home</a>
+          <a className="text-3xl font-bold underline">Home</a>
         </Link>
       </li>
       <li>
         <Link href="/Requests">
-          <a>My Requests</a>
+          <a className="text-3xl font-bold underline">My Requests</a>
         </Link>
       </li>
     </ul>
