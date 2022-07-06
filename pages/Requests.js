@@ -20,7 +20,10 @@ export default function Requests() {
       setLoading(true);
       const user = supabase.auth.user();
 
-      let { data, error, status } = await supabase.from("requests").select("*").eq("fk_ProfileID", user.id);
+      let { data, error, status } = await supabase
+        .from("requests")
+        .select("*")
+        .eq("fk_ProfileID", user.id);
       console.log(user);
       if (error && status !== 406) {
         throw error;
@@ -38,22 +41,61 @@ export default function Requests() {
   function setTableHeader() {
     let header = Object.keys(requests[0]);
     return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>;
+      return (
+        <th
+          scope="col"
+          className="text-sm border-bottom font-medium text-white bg-pink-600 px-6 py-4"
+          key={index}
+        >
+          {key.toUpperCase()}
+        </th>
+      );
     });
   }
   function setTableData() {
     return requests.map((req, index) => {
-      const { id, created_at, fk_ProfileID, RequestTitle, RequestDescription, AnsweredOn, Answer, fk_GroupID } = req; //destructuring
+      const {
+        id,
+        created_at,
+        fk_ProfileID,
+        RequestTitle,
+        RequestDescription,
+        AnsweredOn,
+        Answer,
+        fk_GroupID,
+      } = req; //destructuring
       return (
-        <tr key={id}>
-          <td>{id}</td>
-          <td>{created_at}</td>
-          <td>{fk_ProfileID}</td>
-          <td>{RequestTitle}</td>
-          <td>{RequestDescription}</td>
-          <td>{Answer}</td>
-          <td><input type='date' onChange={(e)=> {console.log(e.target.value)}} value={AnsweredOn}/></td>
-          <td>{fk_GroupID ? fk_GroupID : "none"}</td>
+        <tr className="border-b" key={id}>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
+            {id}
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            {created_at}
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            {fk_ProfileID}
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            {RequestTitle}
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            {RequestDescription}
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            <input
+              type="date"
+              onChange={(e) => {
+                console.log(e.target.value);
+              }}
+              value={AnsweredOn}
+            />
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            {Answer}
+          </td>
+          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
+            {fk_GroupID ? fk_GroupID : "none"}
+          </td>
         </tr>
       );
     });
@@ -61,12 +103,22 @@ export default function Requests() {
 
   return (
     <div>
-      <table id="requests">
-        <tbody>
-          <tr> {requests.length ? setTableHeader() : ""}</tr>
-          {requests.length ? setTableData() : ""}
-        </tbody>
-      </table>
+      <div id="requests" className="m-4 border flex flex-col">
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="overflow-auto">
+              <table className="min-w-full">
+                <thead className="">
+                  <tr className="border-b">
+                    {requests.length ? setTableHeader() : ""}
+                  </tr>
+                </thead>
+                <tbody>{requests.length ? setTableData() : ""}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
