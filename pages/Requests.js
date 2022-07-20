@@ -82,16 +82,23 @@ export default function Requests() {
             </div>
             <p className="text-white mb-2">{RequestDescription}</p>
             {AnsweredOn ? (
-              <p className="text-sm text-indigo-200 inline-block">
-                Answer on{" "}
-                {new Date(AnsweredOn).toLocaleDateString("en-us", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}{" "}
-                {" - '"}{Answer}{"'"}
-              </p>
+              <div>
+                <p className="text-sm text-gray-200 inline-block">
+                  Answer: {" "}
+                </p>
+                <p className="text-sm text-indigo-200 inline">
+                  {new Date(AnsweredOn).toLocaleDateString("en-us", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}{" "}
+                  <p className="text-sm text-gray-200 inline">
+                    {" - '"}
+                    {Answer}{"' "}
+                  </p>
+                </p>
+              </div>
             ) : (
               ""
             )}
@@ -117,7 +124,7 @@ export default function Requests() {
           onClick={() => router.push("/NewRequest")}
           disabled={loading}
         >
-          {loading ? "Loading ..." : "Add Request + " }
+          {loading ? "Loading ..." : "Add Request + "}
         </button>{" "}
       </div>
       <div id="requests" className="m-4 items-center">
