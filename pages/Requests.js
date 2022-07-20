@@ -90,7 +90,7 @@ export default function Requests() {
                   month: "short",
                   day: "numeric",
                 })}{" "}
-                :{Answer ? " {Answer} " : ""}
+                {" - '"}{Answer}{"'"}
               </p>
             ) : (
               ""
