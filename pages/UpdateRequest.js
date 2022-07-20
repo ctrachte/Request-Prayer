@@ -82,7 +82,7 @@ export default function Requests({ session, id }) {
   }
 
   return (
-    <div className="form-widget">
+    <div className="form-widget items-center m-6 lg:w-1/2 md:w-1/2">
       <h2>Update Prayer Request</h2>
       <div>
         <label htmlFor="RequestTitle">Title</label>

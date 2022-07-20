@@ -63,31 +63,44 @@ export default function Requests() {
         fk_GroupID,
       } = req; //destructuring
       return (
-        <div key={id} className="border-solid py-3 rounded-lg bg-black border-2 border-pink-600 max-w-sm m-4 overflow-hidden shadow-lg inline-block">
+        <div
+          key={id}
+          className="border-solid py-3 rounded-lg bg-black border-2 border-pink-600 max-w-sm m-4 overflow-hidden shadow-lg inline-block"
+        >
           <div className="px-6 py-4">
             <div className="text-sm mb-2 text-indigo-200">
-              On {new Date(created_at).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }
+              On{" "}
+              {new Date(created_at).toLocaleDateString("en-us", {
+                weekday: "long",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
             </div>
             <div className="text-xl text-white mb-2">
-              <p className="text-white mb-2">
-                {RequestTitle}
-              </p>
+              <p className="text-white mb-2">{RequestTitle}</p>
             </div>
-            <p className="text-white mb-2">
-              {RequestDescription}
-            </p>
-            {AnsweredOn ? 
-            <p className="text-sm text-indigo-200 inline-block">
-              Answer on {new Date(AnsweredOn).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) } :
-              {Answer ? 
-                <p>
-                  " {Answer} ""
-                </p> : ""}
-            </p> : ""}
+            <p className="text-white mb-2">{RequestDescription}</p>
+            {AnsweredOn ? (
+              <p className="text-sm text-indigo-200 inline-block">
+                Answer on{" "}
+                {new Date(AnsweredOn).toLocaleDateString("en-us", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}{" "}
+                :{Answer ? " {Answer} " : ""}
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="px-6 pt-4 pb-2">
             <span className="bg-pink-600 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
-              <Link href={{ pathname: "/UpdateRequest", query: { keyword: id } }}>
+              <Link
+                href={{ pathname: "/UpdateRequest", query: { keyword: id } }}
+              >
                 Update Request
               </Link>
             </span>
@@ -97,11 +110,18 @@ export default function Requests() {
     });
   }
   return (
-    <div>
-      <div id="requests" className="m-4 flex items-center">
-            <div className="overflow-auto flex items-center">
-                <div>{requests.length ? setTableData() : ""}</div>
-            </div>
+    <div className="block">
+      <div id="new-request-button" className="m-4 w-1/3	items-center">
+        <button
+          className="mx-4 bg-pink-600 items-center border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
+          onClick={() => router.push("/NewRequest")}
+          disabled={loading}
+        >
+          {loading ? "Loading ..." : "Add Request + " }
+        </button>{" "}
+      </div>
+      <div id="requests" className="m-4 items-center">
+        {requests.length ? setTableData() : ""}
       </div>
     </div>
   );
