@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Requests() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requests, setRequests] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -42,10 +44,9 @@ export default function Requests() {
     let header = Object.keys(requests[0]);
     return header.map((key, index) => {
       return (
-        <th
-          scope="col"
-          key={index}
-        >{key.toUpperCase()}</th>
+        <th scope="col" key={index}>
+          {key.toUpperCase()}
+        </th>
       );
     });
   }
@@ -65,7 +66,7 @@ export default function Requests() {
         <tr className="border-b" key={id}>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
             <Link href={{ pathname: "/UpdateRequest", query: { keyword: id } }}>
-                Update Request
+              Update Request
             </Link>
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
@@ -111,7 +112,20 @@ export default function Requests() {
               <table className="min-w-full">
                 <thead className="">
                   <tr className="border-b">
-                    <th></th>{requests.length ? setTableHeader() : ""}</tr>
+                    <th>
+                      {" "}
+                      <button
+                        className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
+                        onClick={() =>
+                          router.push('/NewRequest')
+                        }
+                        disabled={loading}
+                      >
+                        {loading ? "Loading ..." : "New Prayer Request"}
+                      </button>
+                    </th>
+                    {requests.length ? setTableHeader() : ""}
+                  </tr>
                 </thead>
                 <tbody>{requests.length ? setTableData() : ""}</tbody>
               </table>

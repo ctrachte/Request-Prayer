@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
+import { useRouter } from "next/router";
 
 export default function Requests({ session, id}) {
   const [loading, setLoading] = useState(true);
@@ -8,6 +9,7 @@ export default function Requests({ session, id}) {
   const [Answer, setAnswer] = useState(null);
   const [AnsweredOn, setAnsweredOn] = useState(null);
   const [fk_GroupID, setfk_GroupID] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(false);
@@ -65,13 +67,14 @@ export default function Requests({ session, id}) {
       alert(error.message);
     } finally {
       setLoading(false);
-      alert("New Prayer Request Submitted!")
+      router.push('/Requests')
     }
   }
 
   return (
 
-    <div className="form-widget">
+    <div className="form-widget m-6 col-6">
+      <h1>Submit a New Prayer Request</h1>
       <div>
         <label htmlFor="RequestTitle">RequestTitle</label>
         <input
@@ -108,18 +111,9 @@ export default function Requests({ session, id}) {
           onChange={(e) => setAnswer(e.target.value)}
         />
       </div>
-      {/* <div>
-        <label htmlFor="id">Request ID</label>
-        <input
-          id="id"
-          type="text"
-          value={id}
-          disabled={true}
-        />
-      </div> */}
       <div>
         <button
-          className="button block primary"
+          className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
           onClick={() => createRequest({ id, RequestTitle, RequestDescription, Answer, AnsweredOn })}
           disabled={loading}
         >
