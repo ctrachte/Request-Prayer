@@ -63,75 +63,45 @@ export default function Requests() {
         fk_GroupID,
       } = req; //destructuring
       return (
-        <tr className="border-b" key={id}>
-          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
-            <Link href={{ pathname: "/UpdateRequest", query: { keyword: id } }}>
-              Update Request
-            </Link>
-          </td>
-          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bh-black text-white bg-pink-600">
-            {id}
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            {created_at}
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            {fk_ProfileID}
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            {RequestTitle}
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            {RequestDescription}
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            <input
-              type="date"
-              onChange={(e) => {
-                console.log(e.target.value);
-              }}
-              value={AnsweredOn}
-            />
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            {Answer}
-          </td>
-          <td className="text-sm text-white bg-pink-600 font-light px-6 py-4 whitespace-nowrap">
-            {fk_GroupID ? fk_GroupID : "none"}
-          </td>
-        </tr>
+        <div key={id} className="border-solid py-3 rounded-lg bg-black border-2 border-pink-600 max-w-sm m-4 overflow-hidden shadow-lg inline-block">
+          <div className="px-6 py-4">
+            <div className="text-sm mb-2 text-indigo-200">
+              On {new Date(created_at).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }
+            </div>
+            <div className="text-xl text-white mb-2">
+              <p className="text-white mb-2">
+                {RequestTitle}
+              </p>
+            </div>
+            <p className="text-white mb-2">
+              {RequestDescription}
+            </p>
+            {AnsweredOn ? 
+            <p className="text-sm text-indigo-200 inline-block">
+              Answer on {new Date(AnsweredOn).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) } :
+              {Answer ? 
+                <p>
+                  " {Answer} ""
+                </p> : ""}
+            </p> : ""}
+          </div>
+          <div className="px-6 pt-4 pb-2">
+            <span className="bg-pink-600 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
+              <Link href={{ pathname: "/UpdateRequest", query: { keyword: id } }}>
+                Update Request
+              </Link>
+            </span>
+          </div>
+        </div>
       );
     });
   }
   return (
     <div>
-      <div id="requests" className="m-4 border flex flex-col">
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="overflow-auto">
-              <table className="min-w-full">
-                <thead className="">
-                  <tr className="border-b">
-                    <th>
-                      {" "}
-                      <button
-                        className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
-                        onClick={() =>
-                          router.push('/NewRequest')
-                        }
-                        disabled={loading}
-                      >
-                        {loading ? "Loading ..." : "New Prayer Request"}
-                      </button>
-                    </th>
-                    {requests.length ? setTableHeader() : ""}
-                  </tr>
-                </thead>
-                <tbody>{requests.length ? setTableData() : ""}</tbody>
-              </table>
+      <div id="requests" className="m-4 flex items-center">
+            <div className="overflow-auto flex items-center">
+                <div>{requests.length ? setTableData() : ""}</div>
             </div>
-          </div>
-        </div>
       </div>
     </div>
   );
