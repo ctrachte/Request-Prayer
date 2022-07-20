@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { useRouter } from "next/router";
+import Layout from "../components/Layout";
 
-export default function Requests({ session, id}) {
+export default function Requests({ session, id }) {
   const [loading, setLoading] = useState(true);
   const [RequestTitle, setRequestTitle] = useState(null);
   const [RequestDescription, setRequestDescription] = useState(null);
@@ -22,8 +23,10 @@ export default function Requests({ session, id}) {
 
       let { data, error, status } = await supabase
         .from("requests")
-        .select(`id, RequestTitle, RequestDescription, Answer, AnsweredOn, fk_GroupID`)
-        .eq("id", id)
+        .select(
+          `id, RequestTitle, RequestDescription, Answer, AnsweredOn, fk_GroupID`
+        )
+        .eq("id", id);
 
       if (error && status !== 406) {
         throw error;
@@ -43,7 +46,13 @@ export default function Requests({ session, id}) {
     }
   }
 
-  async function createRequest({ RequestTitle, RequestDescription, Answer, AnsweredOn, fk_GroupID }) {
+  async function createRequest({
+    RequestTitle,
+    RequestDescription,
+    Answer,
+    AnsweredOn,
+    fk_GroupID,
+  }) {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -53,7 +62,7 @@ export default function Requests({ session, id}) {
         Answer,
         AnsweredOn,
         fk_ProfileID: user.id,
-        fk_GroupID: fk_GroupID || null
+        fk_GroupID: fk_GroupID || null,
       };
 
       let { error } = await supabase.from("requests").insert(NewRequest, {
@@ -67,58 +76,68 @@ export default function Requests({ session, id}) {
       alert(error.message);
     } finally {
       setLoading(false);
-      router.push('/Requests')
+      router.push("/Requests");
     }
   }
 
   return (
-
-    <div className="form-widget m-6 col-6">
-      <h1>Submit a New Prayer Request</h1>
-      <div>
-        <label htmlFor="RequestTitle">RequestTitle</label>
-        <input
-          id="RequestTitle"
-          type="text"
-          value={RequestTitle || ""}
-          onChange={(e) => setRequestTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="RequestDescription">Request RequestDescription</label>
-        <input
-          id="RequestDescription"
-          type="text"
-          value={RequestDescription || ""}
-          onChange={(e) => setRequestDescription(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="AnsweredOn">Request Answered On</label>
-        <input
-          id="AnsweredOn"
-          type="date"
-          value={AnsweredOn || ""}
-          onChange={(e) => setAnsweredOn(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="Answer">Request Answer</label>
-        <input
-          id="Answer"
-          type="text"
-          value={Answer || ""}
-          onChange={(e) => setAnswer(e.target.value)}
-        />
-      </div>
-      <div>
-        <button
-          className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
-          onClick={() => createRequest({ id, RequestTitle, RequestDescription, Answer, AnsweredOn })}
-          disabled={loading}
-        >
-          {loading ? "Loading ..." : "Create Prayer Request"}
-        </button>
+    <div>
+      <Layout />
+      <div className="form-widget m-6 col-6">
+        <h1>Submit a New Prayer Request</h1>
+        <div>
+          <label htmlFor="RequestTitle">RequestTitle</label>
+          <input
+            id="RequestTitle"
+            type="text"
+            value={RequestTitle || ""}
+            onChange={(e) => setRequestTitle(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="RequestDescription">Request RequestDescription</label>
+          <input
+            id="RequestDescription"
+            type="text"
+            value={RequestDescription || ""}
+            onChange={(e) => setRequestDescription(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="AnsweredOn">Request Answered On</label>
+          <input
+            id="AnsweredOn"
+            type="date"
+            value={AnsweredOn || ""}
+            onChange={(e) => setAnsweredOn(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="Answer">Request Answer</label>
+          <input
+            id="Answer"
+            type="text"
+            value={Answer || ""}
+            onChange={(e) => setAnswer(e.target.value)}
+          />
+        </div>
+        <div>
+          <button
+            className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
+            onClick={() =>
+              createRequest({
+                id,
+                RequestTitle,
+                RequestDescription,
+                Answer,
+                AnsweredOn,
+              })
+            }
+            disabled={loading}
+          >
+            {loading ? "Loading ..." : "Create Prayer Request"}
+          </button>
+        </div>
       </div>
     </div>
   );

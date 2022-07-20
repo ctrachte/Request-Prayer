@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Layout from "../components/Layout";
 
 export default function Requests() {
   const [session, setSession] = useState(null);
@@ -83,9 +84,7 @@ export default function Requests() {
             <p className="text-white mb-2">{RequestDescription}</p>
             {AnsweredOn ? (
               <div>
-                <p className="text-sm text-gray-200 inline-block">
-                  Answer: {" "}
-                </p>
+                <p className="text-sm text-gray-200 inline-block">Answer: </p>
                 <p className="text-sm text-indigo-200 inline">
                   {new Date(AnsweredOn).toLocaleDateString("en-us", {
                     weekday: "long",
@@ -95,7 +94,8 @@ export default function Requests() {
                   })}{" "}
                   <p className="text-sm text-gray-200 inline">
                     {" - '"}
-                    {Answer}{"' "}
+                    {Answer}
+                    {"' "}
                   </p>
                 </p>
               </div>
@@ -118,6 +118,7 @@ export default function Requests() {
   }
   return (
     <div className="block">
+      <Layout/>
       <div id="new-request-button" className="m-4 w-1/3	items-center">
         <button
           className="mx-4 bg-pink-600 items-center border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"

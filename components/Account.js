@@ -113,20 +113,6 @@ export default function Account({ session }) {
         >
           Sign Out
         </a>
-        <a
-          href="/"
-          className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
-          htmlFor="single"
-        >
-          Home
-        </a>
-        <a
-          className="m-2 bg-pink-600 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-small rounded-md text-white hover:bg-pink-700 hover:text-white md:py-2 md:text-lg md:px-5"
-          htmlFor="single"
-          href="/Requests"
-        >
-          My Requests
-        </a>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { supabase } from "../utils/supabaseClient";
 import Auth from "../components/Auth";
 import Account from "../components/Account";
 import Link from "next/link";
+import Layout from "../components/Layout";
 
 export default function Login() {
   const [session, setSession] = useState(null);
@@ -20,7 +21,11 @@ export default function Login() {
       {!session ? (
         <Auth />
       ) : (
-        <Account key={session.user.id} session={session} />
+        <div>
+          <Layout/>
+          <br/>
+          <Account key={session.user.id} session={session} />
+        </div>
       )}
     </div>
   );
